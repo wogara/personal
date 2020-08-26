@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circles</title>
+	<link rel="stylesheet" href="/stylesheets/circles.css">
+	<script type="text/javascript" src = "/javascript/paper-full.js"></script>
+	<script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+	<script type="text/paperscript" canvas="myCanvas">
+
+	var keyData = {
+	a:{
+		color: "purple",
+		sound: new Howl({
+		src: ['/sounds/bubbles.mp3']
+		})
+
+	},
+	s:{
+
+		color: "yellow",
+		sound: new Howl({
+		src: ['sounds/clay.mp3']
+		})
+
+    },
+    d:{
+
+		color: "red",
+		sound: new Howl({
+		src: ['sounds/confetti.mp3']
+		})
+	},
+    f:{
+		color: "green",
+		sound: new Howl({
+		src: ['sounds/corona.mp3']
+		})
+
+	},
+	g:{
+
+		color: "blue",
+		sound: new Howl({
+		src: ['sounds/dotted-spiral.mp3']
+		})
+
+    },
+    h:{
+
+		color: "orange",
+		sound: new Howl({
+		src: ['sounds/flash-1.mp3']
+		})
+	},
+    j:{
+		color: "pink",
+		sound: new Howl({
+		src: ['sounds/flash-2.mp3']
+		})
+
+	},
+	k:{
+
+		color: "aqua",
+		sound: new Howl({
+		src: ['sounds/flash-3.mp3']
+		})
+
+    },
+    l:{
+
+		color: "azure",
+		sound: new Howl({
+		src: ['sounds/glimmer.mp3']
+		})
+	},
+    z:{
+		color: "blueviolet",
+		sound: new Howl({
+		src: ['sounds/moon.mp3']
+		})
+
+	},
+	x:{
+
+		color: "brown",
+		sound: new Howl({
+		src: ['sounds/pinwheel.mp3']
+		})
+
+    },
+    c:{
+
+		color: "cadetblue",
+		sound: new Howl({
+		src: ['sounds/piston-1.mp3']
+		})
+	},
+    v:{
+		color: "chartreuse",
+		sound: new Howl({
+		src: ['sounds/piston-2.mp3']
+		})
+
+	},
+	b:{
+
+		color: "coral",
+		sound: new Howl({
+		src: ['sounds/piston-3.mp3']
+		})
+
+    },
+    n:{
+
+		color: "crimson",
+		sound: new Howl({
+		src: ['sounds/prism-1.mp3']
+		})
+	},
+    m:{
+		color: "cyan",
+		sound: new Howl({
+		src: ['sounds/prism-2.mp3']
+		})
+
+	},
+	q:{
+
+		color: "darkgray",
+		sound: new Howl({
+		src: ['sounds/prism-3.mp3']
+		})
+
+    },
+    w:{
+
+		color: "darkgreen",
+		sound: new Howl({
+		src: ['sounds/splits.mp3']
+		})
+	},
+    e:{
+		color: "darkmagenta",
+		sound: new Howl({
+		src: ['sounds/squiggle.mp3']
+		})
+
+	},
+	r:{
+
+		color: "darkorange",
+		sound: new Howl({
+		src: ['sounds/strike.mp3']
+		})
+
+    },
+    t:{
+
+		color: "darkorchid",
+		sound: new Howl({
+		src: ['sounds/suspension.mp3']
+		})
+	},
+    y:{
+		color: "darksalmon",
+		sound: new Howl({
+		src: ['sounds/timer.mp3']
+		})
+
+	},
+	u:{
+
+		color: "darkseagreen",
+		sound: new Howl({
+		src: ['sounds/ufo.mp3']
+		})
+
+    },
+    i:{
+
+		color: "deeppink",
+		sound: new Howl({
+		src: ['sounds/veil.mp3']
+		})
+	},
+    o:{
+		color: "deepskyblue",
+		sound: new Howl({
+		src: ['sounds/wipe.mp3']
+		})
+
+	},
+	p:{
+
+		color: "firebrick",
+		sound: new Howl({
+		src: ['sounds/zig-zag.mp3']
+		})
+
+    }
+
+
+}
+
+
+	//sound.play();
+
+	// Create a Paper.js Path to draw a line into it:
+	var path = new Path();
+	// Give the stroke a color
+	path.strokeColor = 'black';
+	var circles = [];
+	
+// The amount of circles we want to make:
+var count = 150;
+
+// Create a symbol, which we will use to place instances of later:
+var path = new Path.Circle({
+	center: [0, 0],
+	radius: 10,
+	fillColor: 'white',
+	strokeColor: 'black'
+});
+
+var symbol = new Symbol(path);
+
+// Place the instances of the symbol:
+for (var i = 0; i < count; i++) {
+	// The center position is a random point in the view:
+	var center = Point.random() * view.size;
+	var placedSymbol = symbol.place(center);
+	placedSymbol.scale(i / count);
+}
+
+	function onKeyDown(event) {
+
+	if (keyData[event.key]){
+	
+		// When a key is pressed, set the content of the text item:
+		var maxPoint = new Point(view.size.width,view.size.height);
+		var randomPoint = Point.random();
+		var point = maxPoint*randomPoint;
+		var newCircle = new Path.Circle(point,500);
+		newCircle.fillColor = keyData[event.key].color;
+		keyData[event.key].sound.play();
+		circles.push(newCircle);
+	}
+	}
+
+	//var animatedCircle = new Path.Circle(new Point(100,100),100)
+	//animatedCircle.fillColor = "red";
+
+	function onFrame(event){
+		for (var i = 0; i < circles.length; i++){
+			circles[i].fillColor.hue += 1;
+			circles[i].scale(.9);
+		}
+        for (var i = 0; i < count; i++) {
+		var item = project.activeLayer.children[i];
+		
+		// Move the item 1/20th of its width to the right. This way
+		// larger circles move faster than smaller circles:
+		item.position.x += item.bounds.width / 20;
+
+		// If the item has left the view on the right, move it back
+		// to the left:
+		if (item.bounds.left > view.size.width) {
+			item.position.x = -item.bounds.width;
+		}
+	}
+	}
+	</script>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
