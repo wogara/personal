@@ -1,10 +1,7 @@
 var express = require('express');
-var http = require('http');
-var enforce= require('express-sslify');
 
 var app = express();
 
-app.use(enforce.HTTPS());
 
 
 app.set('view engine', 'ejs');
