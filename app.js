@@ -11,7 +11,7 @@ function requireHTTPS(req, res, next) {
   next();
 }
 
-app.use(requireHTTPS);
+//app.use(requireHTTPS);
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 
