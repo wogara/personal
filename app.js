@@ -11,7 +11,7 @@ function requireHTTPS(req, res, next) {
   next();
 }
 
-app.use(requireHTTPS);
+//app.use(requireHTTPS);
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
 
@@ -21,6 +21,10 @@ app.get("/",function(req,res){
 
 app.get("/patatap",function(req,res){
     res.render("circles");
+});
+
+app.get("/pathfinder",function(req,res){
+    res.render("grid");
 });
 
 app.get("/resume",function(req,res){
